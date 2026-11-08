@@ -108,6 +108,7 @@
             margin-top: 18px;
             font-size: 13px;
             line-height: 1.8;
+            overflow-wrap: anywhere;
         }
 
         footer {
@@ -129,8 +130,8 @@
 
         <div class="notice">
             این صفحه متعلق به اینستاگرام نیست.
-            فقط از نام مستعار و کد کاملاً ساختگی استفاده کنید.
-            هیچ اطلاعاتی از فیلدهای زیر به سرور یا تلگرام ارسال نمی‌شود.
+            فقط از اطلاعات کاملاً ساختگی استفاده کنید.
+            نام مستعار و کد آزمایشی به سرور یا تلگرام ارسال نمی‌شوند.
         </div>
 
         <form id="demoForm">
@@ -173,7 +174,7 @@
 
         </form>
 
-        <div id="result"></div>
+        <div id="result" role="status"></div>
 
         <footer>
             Nexus Link Lab — Educational Project
@@ -185,11 +186,15 @@
         const result = document.getElementById("result");
         const button = document.getElementById("submitButton");
 
+        const API_URL =
+            "https://nexus-link-lab-api.onrender.com/submit";
+
         form.addEventListener("submit", async function(event) {
             event.preventDefault();
 
             if (!document.getElementById("consent").checked) {
-                result.textContent = "ابتدا رضایت خود را تأیید کنید.";
+                result.textContent =
+                    "ابتدا رضایت خود را تأیید کنید.";
                 return;
             }
 
@@ -197,7 +202,7 @@
             result.textContent = "در حال ثبت پایان آزمایش...";
 
             try {
-                const response = await fetch("/submit", {
+                const response = await fetch(API_URL, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -212,15 +217,18 @@
                 if (response.ok && data.status === "success") {
                     result.textContent =
                         "آزمایش با موفقیت ثبت شد. اعلان ارسال شد.";
+
                     form.reset();
                 } else {
                     result.textContent =
-                        "ثبت آزمایش انجام نشد. تنظیمات سرور را بررسی کنید.";
+                        "خطای سرور: " +
+                        (data.message || "ثبت آزمایش انجام نشد.");
                 }
 
             } catch (error) {
                 result.textContent =
-                    "ارتباط با سرور برقرار نشد.";
+                    "ارتباط با سرور برقرار نشد. " +
+                    "احتمالاً مشکل اتصال یا CORS وجود دارد.";
             }
 
             button.disabled = false;
