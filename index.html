@@ -1,95 +1,66 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Link Lab</title><style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Link Lab</title>
+  <style>
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #fafafa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
-
-    .container {
-        background: white;
-        width: 85%;
-        max-width: 360px;
-        padding: 30px;
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        text-align: center;
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 3px 15px #ccc;
     }
-
-    h1 {
-        color: #262626;
-        font-size: 27px;
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 6px;
     }
-
-    p {
-        color: #777;
-        font-size: 14px;
-    }
-
-    input {
-        width: 90%;
-        padding: 13px;
-        margin: 9px 0;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 15px;
-    }
-
+    input { border: 1px solid #ccc; }
     button {
-        width: 98%;
-        padding: 13px;
-        margin-top: 15px;
-        background: #3897f0;
-        color: white;
-        border: none;
-        border-radius: 7px;
-        font-size: 16px;
+      background: #2878e8;
+      color: white;
+      border: 0;
+      cursor: pointer;
     }
+    #result { margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Nexus Link Lab</h2>
+    <p>Educational Testing Environment</p>
+    <p><strong>Demo only — Do not enter real account details.</strong></p>
 
-    .notice {
-        margin-top: 20px;
-        font-size: 12px;
-        color: #999;
-    }
-</style>
+    <form id="demoForm">
+      <input type="text" placeholder="Demo username" required>
+      <input type="text" placeholder="Test code" required>
+      <button type="submit">Run Demo</button>
+    </form>
 
-</head><body><div class="container"><h1>Instagram Link Lab</h1>
+    <p id="result"></p>
+  </div>
 
-<p>Educational Testing Environment</p>
-
-<form id="demoForm">
-
-    <input
-        type="text"
-        placeholder="Gmail or Username"
-        required
-    >
-
-    <input
-        type="text"
-        placeholder="Test Code"
-        required
-    >
-
-    <button type="submit">Confirm</button>
-
-</form>
-
-<div class="notice">
-    Demo only — Never enter real passwords.
-</div>
-
-</div><script>
-document.getElementById("demoForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    alert("Demo completed successfully!");
-});
-</script></body>
+  <script>
+    document.getElementById("demoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("result").textContent =
+        "Demo completed successfully!";
+      this.reset();
+    });
+  </script>
+</body>
 </html>
