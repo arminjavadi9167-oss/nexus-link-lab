@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from datetime import datetime, timezone
 from uuid import uuid4
 import urllib.request
@@ -8,19 +8,22 @@ import os
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["GET"])
 def home():
-    return "Instagram Link Lab API is running!"
+    return send_from_directory(app.root_path, "index.html")
+
 
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
 
+
 @app.route("/submit", methods=["POST"])
 def submit():
     data = request.get_json(silent=True) or {}
 
-    if data.get("consent") is not True:
+    if not isinstance(data, dict) or data.get("consent") is not True:
         return jsonify({"error": "Consent required"}), 400
 
     record_id = str(uuid4())
@@ -33,8 +36,8 @@ def submit():
         return jsonify({"error": "Telegram not configured"}), 500
 
     message = (
-        "Instagram Link Lab\n"
-        "New educational test completed!\n"
+        "Nexus Link Lab\n"
+        "Educational demo completed!\n"
         f"Test ID: {record_id}\n"
         f"Time: {timestamp}"
     )
