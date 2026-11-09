@@ -1,237 +1,181 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Link Lab</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Link Lab</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #10172a, #253b63);
-            font-family: Tahoma, Arial, sans-serif;
-            color: white;
-        }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #101827;
+      color: #fff;
+      font-family: Tahoma, Arial, sans-serif;
+      padding: 20px;
+    }
 
-        .card {
-            width: 100%;
-            max-width: 420px;
-            padding: 28px;
-            border-radius: 20px;
-            background: #ffffff12;
-            border: 1px solid #ffffff25;
-            box-shadow: 0 15px 45px #0005;
-        }
+    .page-title {
+      text-align: center;
+      font-size: 27px;
+      margin: 20px 0 35px;
+      color: #ffffff;
+    }
 
-        h1 {
-            text-align: center;
-            margin-top: 0;
-            font-size: 27px;
-        }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: #1d293b;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px #0006;
+    }
 
-        .subtitle {
-            text-align: center;
-            color: #cbd5e1;
-            line-height: 1.9;
-            font-size: 13px;
-        }
+    .description {
+      text-align: center;
+      color: #b8c4d6;
+      font-size: 14px;
+      line-height: 2;
+      margin-bottom: 25px;
+    }
 
-        .notice {
-            background: #f59e0b20;
-            border: 1px solid #f59e0b70;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            line-height: 1.9;
-            margin: 20px 0;
-        }
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      font-size: 14px;
+    }
 
-        label {
-            display: block;
-            margin: 15px 0 8px;
-            font-size: 13px;
-        }
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #40516b;
+      border-radius: 8px;
+      background: #111c2d;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ffffff30;
-            border-radius: 10px;
-            background: #10172a;
-            color: white;
-            outline: none;
-            font-size: 14px;
-        }
+    input:focus {
+      border-color: #3978f6;
+    }
 
-        .consent {
-            display: flex;
-            align-items: flex-start;
-            gap: 9px;
-            font-size: 12px;
-            line-height: 1.8;
-            margin: 20px 0;
-        }
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #3978f6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-        .consent input {
-            margin-top: 4px;
-        }
+    button:hover {
+      background: #2864d8;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #38bdf8;
-            color: #082f49;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-        }
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #263c36;
+      line-height: 2;
+      overflow-wrap: anywhere;
+    }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        #result {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 13px;
-            line-height: 1.8;
-            overflow-wrap: anywhere;
-        }
-
-        footer {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 11px;
-            margin-top: 22px;
-        }
-    </style>
+    .notice {
+      color: #8fa3bd;
+      font-size: 11px;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
-    <main class="card">
-        <h1>Nexus Link Lab</h1>
 
-        <p class="subtitle">
-            محیط شبیه‌سازی آموزشی و آزمایش آگاهی سایبری
-        </p>
+  <h1 class="page-title">Instagram Link Lab</h1>
 
-        <div class="notice">
-            این صفحه متعلق به اینستاگرام نیست.
-            فقط از اطلاعات کاملاً ساختگی استفاده کنید.
-            اطلاعات واردشده در فیلدها فقط در مرورگر باقی می‌مانند
-            و به سرور یا تلگرام ارسال نمی‌شوند.
-        </div>
+  <main class="container">
 
-        <form id="demoForm">
+    <p class="description">
+      این یک صفحه آزمایشی و آموزشی از پروژه Nexus Link Lab است.
+    </p>
 
-            <label for="demoName">
-                نام مستعار آزمایشی
-            </label>
+    <form id="testForm">
 
-            <input
-                id="demoName"
-                type="text"
-                placeholder="مثلاً TestUser"
-                autocomplete="off"
-                required
-            >
+      <label for="demoName">نام مستعار آزمایشی</label>
+      <input
+        id="demoName"
+        type="text"
+        maxlength="30"
+        placeholder="مثلاً TestUser"
+        required
+      >
 
-            <label for="demoCode">
-                کد ساختگی آزمایش
-            </label>
+      <label for="demoCode">شناسه ساختگی آزمایش</label>
+      <input
+        id="demoCode"
+        type="text"
+        maxlength="20"
+        placeholder="مثلاً TEST-1234"
+        required
+      >
 
-            <input
-                id="demoCode"
-                type="text"
-                placeholder="مثلاً 123456"
-                autocomplete="off"
-                required
-            >
+      <button type="submit">اجرای آزمایش</button>
 
-            <label class="consent">
-                <input id="consent" type="checkbox" required>
-                <span>
-                    می‌دانم این یک شبیه‌سازی آموزشی است و با
-                    ارسال اعلان پایان آزمایش موافقم.
-                </span>
-            </label>
+    </form>
 
-            <button id="submitButton" type="submit">
-                ثبت پایان آزمایش
-            </button>
+    <div id="result" aria-live="polite"></div>
 
-        </form>
+    <p class="notice">
+      این پروژه مستقل است و وابستگی رسمی به Instagram ندارد.
+    </p>
 
-        <div id="result" role="status"></div>
+  </main>
 
-        <footer>
-            Nexus Link Lab — Educational Project
-        </footer>
-    </main>
+  <script>
+    const form = document.getElementById("testForm");
+    const result = document.getElementById("result");
 
-    <script>
-        const form = document.getElementById("demoForm");
-        const result = document.getElementById("result");
-        const button = document.getElementById("submitButton");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
 
-        const API_URL =
-            "https://nexus-link-api.onrender.com/submit";
+      const name = document.getElementById("demoName").value.trim();
+      const code = document.getElementById("demoCode").value.trim();
 
-        form.addEventListener("submit", async function(event) {
-            event.preventDefault();
+      if (!name || !code) {
+        return;
+      }
 
-            if (!document.getElementById("consent").checked) {
-                result.textContent =
-                    "ابتدا رضایت خود را تأیید کنید.";
-                return;
-            }
+      const testId = "NXL-" + crypto.randomUUID().slice(0, 8);
 
-            button.disabled = true;
-            result.textContent = "در حال بررسی اتصال به سرور...";
+      result.style.display = "block";
+      result.replaceChildren();
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        consent: true
-                    })
-                });
+      const title = document.createElement("strong");
+      title.textContent = "آزمایش با موفقیت انجام شد";
 
-                const data = await response.json();
+      const alias = document.createElement("p");
+      alias.textContent = "نام مستعار: " + name;
 
-                if (response.ok && data.status === "success") {
-                    result.textContent =
-                        "اتصال موفق بود! آزمایش آموزشی ثبت شد.";
+      const demoId = document.createElement("p");
+      demoId.textContent = "شناسه ساختگی: " + code;
 
-                    form.reset();
-                } else {
-                    result.textContent =
-                        "خطای سرور: " +
-                        (data.message || "درخواست انجام نشد.");
-                }
+      const generatedId = document.createElement("p");
+      generatedId.textContent = "شناسه آزمایش: " + testId;
 
-            } catch (error) {
-                result.textContent =
-                    "ارتباط با سرور برقرار نشد. اتصال یا تنظیمات CORS را بررسی کنید.";
-            } finally {
-                button.disabled = false;
-            }
-        });
-    </script>
+      result.append(title, alias, demoId, generatedId);
+    });
+  </script>
+
 </body>
 </html>
