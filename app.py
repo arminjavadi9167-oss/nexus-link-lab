@@ -3,27 +3,31 @@ from datetime import datetime, timezone
 from uuid import uuid4
 from functools import wraps
 import os
-import logging
 import secrets
+import re
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.INFO)
 
 ALLOWED_ORIGIN = "https://nexus-link-lab.onrender.com"
 
-# Set these in Render Environment Variables
 DASHBOARD_USER = os.environ.get("DASHBOARD_USER", "admin")
 DASHBOARD_PASSWORD = os.environ.get("DASHBOARD_PASSWORD")
 
-# Store only harmless educational test metadata
+# Store only explicitly consented synthetic test data.
 test_results = []
 
 
 @app.after_request
 def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = ALLOWED_ORIGIN
+    origin = request.headers.get("Origin")
+
+    if origin == ALLOWED_ORIGIN:
+        response.headers["Access-Control-Allow-Origin"] = ALLOWED_ORIGIN
+        response.headers["Vary"] = "Origin"
+
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+
     return response
 
 
@@ -46,7 +50,7 @@ def dashboard_auth_required(f):
             return (
                 "Authentication required",
                 401,
-                {"WWW-Authenticate": 'Basic realm="Nexus Dashboard"'}
+                {"WWW-Authenticate": 'Basic realm="Instagram Link Lab Dashboard"'}
             )
 
         return f(*args, **kwargs)
@@ -57,7 +61,7 @@ def dashboard_auth_required(f):
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({
-        "project": "Nexus Link Lab",
+        "project": "Instagram Link Lab",
         "status": "online",
         "message": "Educational testing API"
     })
@@ -76,10 +80,40 @@ def submit():
 
     data = request.get_json(silent=True)
 
-    if not isinstance(data, dict) or data.get("consent") is not True:
+    if not isinstance(data, dict):
+        return jsonify({
+            "status": "error",
+            "message": "Invalid request"
+        }), 400
+
+    if data.get("consent") is not True:
         return jsonify({
             "status": "error",
             "message": "Consent required"
+        }), 400
+
+    demo_name = data.get("demo_name")
+    demo_code = data.get("demo_code")
+
+    if not isinstance(demo_name, str) or not isinstance(demo_code, str):
+        return jsonify({
+            "status": "error",
+            "message": "Invalid test data"
+        }), 400
+
+    demo_name = demo_name.strip()
+    demo_code = demo_code.strip()
+
+    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,30}", demo_name):
+        return jsonify({
+            "status": "error",
+            "message": "Invalid demo alias"
+        }), 400
+
+    if not re.fullmatch(r"[a-zA-Z0-9]{1,20}", demo_code):
+        return jsonify({
+            "status": "error",
+            "message": "Invalid synthetic test ID"
         }), 400
 
     test_id = str(uuid4())
@@ -87,21 +121,16 @@ def submit():
 
     result = {
         "test_id": test_id,
+        "demo_name": demo_name,
+        "demo_code": demo_code,
         "timestamp": timestamp,
         "status": "success"
     }
 
     test_results.append(result)
 
-    # Keep only the latest 100 test results
     if len(test_results) > 100:
         del test_results[:-100]
-
-    app.logger.info(
-        "Educational test completed: test_id=%s timestamp=%s",
-        test_id,
-        timestamp
-    )
 
     return jsonify({
         "status": "success",
@@ -120,7 +149,7 @@ def dashboard():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Nexus Link Lab Dashboard</title>
+        <title>Instagram Link Lab Dashboard</title>
 
         <style>
             body {
@@ -174,7 +203,7 @@ def dashboard():
     </head>
 
     <body>
-        <h1>Nexus Link Lab</h1>
+        <h1>Instagram Link Lab</h1>
         <p>Educational Test Dashboard</p>
 
         <div class="card">
@@ -189,6 +218,8 @@ def dashboard():
         <table>
             <thead>
                 <tr>
+                    <th>Demo Alias</th>
+                    <th>Synthetic Test ID</th>
                     <th>Test ID</th>
                     <th>Timestamp</th>
                     <th>Status</th>
@@ -198,6 +229,8 @@ def dashboard():
             <tbody>
                 {% for result in results %}
                 <tr>
+                    <td>{{ result.demo_name }}</td>
+                    <td>{{ result.demo_code }}</td>
                     <td>{{ result.test_id }}</td>
                     <td>{{ result.timestamp }}</td>
                     <td class="success">{{ result.status }}</td>
@@ -209,8 +242,8 @@ def dashboard():
         <br>
 
         <p>
-            Only educational test metadata is displayed.
-            No credentials or personal information are collected.
+            Only consented synthetic educational test data is displayed.
+            Do not submit passwords or real account information.
         </p>
     </body>
     </html>
