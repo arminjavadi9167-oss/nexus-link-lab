@@ -61,7 +61,7 @@
             font-size: 13px;
         }
 
-        input {
+        input[type="text"] {
             width: 100%;
             padding: 13px;
             border: 1px solid #ffffff30;
@@ -82,7 +82,6 @@
         }
 
         .consent input {
-            width: auto;
             margin-top: 4px;
         }
 
@@ -131,7 +130,8 @@
         <div class="notice">
             این صفحه متعلق به اینستاگرام نیست.
             فقط از اطلاعات کاملاً ساختگی استفاده کنید.
-            نام مستعار و کد آزمایشی به سرور یا تلگرام ارسال نمی‌شوند.
+            اطلاعات واردشده در فیلدها فقط در مرورگر باقی می‌مانند
+            و به سرور یا تلگرام ارسال نمی‌شوند.
         </div>
 
         <form id="demoForm">
@@ -163,8 +163,8 @@
             <label class="consent">
                 <input id="consent" type="checkbox" required>
                 <span>
-                    می‌دانم این یک شبیه‌سازی آموزشی است و با ارسال
-                    اعلان پایان آزمایش موافقم.
+                    می‌دانم این یک شبیه‌سازی آموزشی است و با
+                    ارسال اعلان پایان آزمایش موافقم.
                 </span>
             </label>
 
@@ -187,7 +187,7 @@
         const button = document.getElementById("submitButton");
 
         const API_URL =
-            "https://nexus-link-lab-api.onrender.com/submit";
+            "https://nexus-link-api.onrender.com/submit";
 
         form.addEventListener("submit", async function(event) {
             event.preventDefault();
@@ -199,7 +199,7 @@
             }
 
             button.disabled = true;
-            result.textContent = "در حال ثبت پایان آزمایش...";
+            result.textContent = "در حال بررسی اتصال به سرور...";
 
             try {
                 const response = await fetch(API_URL, {
@@ -216,22 +216,21 @@
 
                 if (response.ok && data.status === "success") {
                     result.textContent =
-                        "آزمایش با موفقیت ثبت شد. اعلان ارسال شد.";
+                        "اتصال موفق بود! آزمایش آموزشی ثبت شد.";
 
                     form.reset();
                 } else {
                     result.textContent =
                         "خطای سرور: " +
-                        (data.message || "ثبت آزمایش انجام نشد.");
+                        (data.message || "درخواست انجام نشد.");
                 }
 
             } catch (error) {
                 result.textContent =
-                    "ارتباط با سرور برقرار نشد. " +
-                    "احتمالاً مشکل اتصال یا CORS وجود دارد.";
+                    "ارتباط با سرور برقرار نشد. اتصال یا تنظیمات CORS را بررسی کنید.";
+            } finally {
+                button.disabled = false;
             }
-
-            button.disabled = false;
         });
     </script>
 </body>
